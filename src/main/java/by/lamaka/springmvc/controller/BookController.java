@@ -3,6 +3,7 @@ package by.lamaka.springmvc.controller;
 import by.lamaka.springmvc.entity.Author;
 import by.lamaka.springmvc.entity.Book;
 import by.lamaka.springmvc.entity.Genre;
+import by.lamaka.springmvc.exception.BookAlreadyExistException;
 import by.lamaka.springmvc.service.BookService;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -45,7 +46,7 @@ public class BookController {
     }
 
     @PostMapping("/save")
-    public String saveBook(@Valid @ModelAttribute("book") Book book, BindingResult bindingResult) {
+    public String saveBook(@Valid @ModelAttribute("book") Book book, BindingResult bindingResult) throws BookAlreadyExistException {
         if (bindingResult.hasErrors()) {
             return "saveBook";
         }

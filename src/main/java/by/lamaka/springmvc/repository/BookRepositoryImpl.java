@@ -1,6 +1,7 @@
 package by.lamaka.springmvc.repository;
 
 import by.lamaka.springmvc.entity.Book;
+import by.lamaka.springmvc.exception.BookAlreadyExistException;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.Session;
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Repository
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -26,9 +26,17 @@ public class BookRepositoryImpl implements BookRepository {
     }
 
     @Override
-    public void save(Book book) {
+    public void save(Book book) throws BookAlreadyExistException {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
+
+            Query<Book> query = session.createQuery("from Book where title=:title AND author=:author", Book.class);
+            query.setParameter("title",book.getTitle());
+            query.setParameter("author",book.getAuthor());
+
+            if(!query.getResultList().isEmpty()){
+                throw new BookAlreadyExistException("Book with title >" + book.getTitle() +"< and author >" + book.getAuthor()+"< already exist");
+            }
             session.save(book);
             transaction.commit();
         }
