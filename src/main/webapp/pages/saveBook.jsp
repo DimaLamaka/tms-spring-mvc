@@ -6,7 +6,9 @@
 </head>
 <body>
 <form:form action="/springmvc/book/save" method="post" modelAttribute="book">
-    Title : <form:input path="title"/><br>
+    Title : <form:input path="title"/>
+    <form:errors path="title"/>
+    <br>
     Author : <form:select path="author">
     <form:options items="${authors}"/>
 </form:select><br>
