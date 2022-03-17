@@ -10,6 +10,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,15 +35,15 @@ public class BookRepositoryImpl implements BookRepository {
     }
 
     @Override
-    public Set<Book> findAllByTitleOrAuthor(String filter) {
-        Set<Book> books = null;
+    public List<Book> findAllByTitleOrAuthor(String filter) {
+        List<Book> books = null;
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
 
             Query<Book> query = session.createQuery(
                     "from Book where author like '%" + filter + "%' or title like '%" + filter + "%'", Book.class);
 
-            books = new HashSet<>(query.getResultList());
+            books = new ArrayList<>(new HashSet<>(query.getResultList()));
             transaction.commit();
         }
         return books;

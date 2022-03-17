@@ -8,7 +8,7 @@ import java.util.Set;
 public interface BookService {
     void save(Book book);
 
-    Set<Book> findAllByTitleOrAuthor(String filter);
+    List<Book> findAllByTitleOrAuthor(String filter);
 
     List<Book> findAll();
 }

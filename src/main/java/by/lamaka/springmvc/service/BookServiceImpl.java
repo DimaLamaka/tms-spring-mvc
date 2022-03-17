@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BookServiceImpl implements BookService {
     private final BookRepository repository;
 
@@ -26,7 +26,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Set<Book> findAllByTitleOrAuthor(String filter) {
+    public List<Book> findAllByTitleOrAuthor(String filter) {
         return repository.findAllByTitleOrAuthor(filter);
     }
 

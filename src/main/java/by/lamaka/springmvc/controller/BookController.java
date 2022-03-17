@@ -11,7 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -27,9 +29,9 @@ public class BookController {
 
     @GetMapping
     public String findBooks(Model model, @RequestParam(value = "filter", required = false) String filter) {
-        Set<Book> books = new HashSet<>();
+        List<Book> books = new ArrayList<>();
 
-        books = filter != null ? bookService.findAllByTitleOrAuthor(filter) : new HashSet<>(bookService.findAll());
+        books = filter != null ? bookService.findAllByTitleOrAuthor(filter) : bookService.findAll();
         model.addAttribute("books", books);
         return "allBooks";
     }
