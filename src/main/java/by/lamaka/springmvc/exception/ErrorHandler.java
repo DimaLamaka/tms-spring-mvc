@@ -9,7 +9,7 @@ import org.springframework.web.context.request.WebRequest;
 public class ErrorHandler {
 
     @ExceptionHandler(BookAlreadyExistException.class)
-    public String BookAlreadyExistHandler(Exception e, WebRequest request, Model model) {
+    public String bookAlreadyExistHandler(Exception e, WebRequest request, Model model) {
         model.addAttribute("message", e.getMessage());
         model.addAttribute("details", request.getDescription(false));
         return "error";

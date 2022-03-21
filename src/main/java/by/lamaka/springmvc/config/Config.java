@@ -29,7 +29,7 @@ public class Config {
     }
 
     @Bean
-    public static SessionFactory sessionFactory() {
+    public SessionFactory sessionFactory() {
         org.hibernate.cfg.Configuration configuration = new org.hibernate.cfg.Configuration();
         EntityScanner.scanPackages("by.lamaka.springmvc.entity").addTo(configuration);
         return configuration.buildSessionFactory();
