@@ -6,6 +6,8 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
@@ -19,14 +21,20 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     Long id;
+
+    @NotBlank(message = "Title is required fields")
+    @Size(max = 20,message = "Title must be max 20 symbols")
     @Column(name = "title", nullable = false)
     String title;
+
     @Column(name = "genre", nullable = false)
     @Enumerated(EnumType.STRING)
     Genre genre;
+
     @Column(name = "author", nullable = false)
     @Enumerated(EnumType.STRING)
     Author author;
+
     @Column(name = "dateOfProduction", nullable = false)
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy.MM.dd")

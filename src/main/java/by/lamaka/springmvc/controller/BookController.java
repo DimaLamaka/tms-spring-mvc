@@ -3,18 +3,19 @@ package by.lamaka.springmvc.controller;
 import by.lamaka.springmvc.entity.Author;
 import by.lamaka.springmvc.entity.Book;
 import by.lamaka.springmvc.entity.Genre;
+import by.lamaka.springmvc.exception.BookAlreadyExistException;
 import by.lamaka.springmvc.service.BookService;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 @RequestMapping(value = "springmvc/book")
@@ -45,7 +46,10 @@ public class BookController {
     }
 
     @PostMapping("/save")
-    public String saveBook(@ModelAttribute("book") Book book) {
+    public String saveBook(@Valid @ModelAttribute("book") Book book, BindingResult bindingResult) throws BookAlreadyExistException {
+        if (bindingResult.hasErrors()) {
+            return "saveBook";
+        }
         bookService.save(book);
         return "redirect://localhost:8081/springmvc/book";
     }

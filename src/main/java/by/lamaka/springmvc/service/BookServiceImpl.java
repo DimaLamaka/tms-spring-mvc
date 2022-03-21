@@ -1,6 +1,7 @@
 package by.lamaka.springmvc.service;
 
 import by.lamaka.springmvc.entity.Book;
+import by.lamaka.springmvc.exception.BookAlreadyExistException;
 import by.lamaka.springmvc.repository.BookRepository;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -21,7 +22,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void save(Book book) {
+    public void save(Book book) throws BookAlreadyExistException {
         repository.save(book);
     }
 
